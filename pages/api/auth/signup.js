@@ -2,6 +2,10 @@ import { hashPassword } from '../../../lib/auth';
 import { connectToDatabase } from '../../../lib/db';
 
 async function handler(req, res) {
+  if (!req.method === 'POST') {
+    return;
+  }
+
   const data = req.body;
 
   const { email, password } = data;
@@ -14,7 +18,7 @@ async function handler(req, res) {
   ) {
     res.status(422).json({
       message:
-        'Invalid input - password should also be at least 7 characters long',
+        'Invalid input - password should also be at least 7 characters long.',
     });
     return;
   }
@@ -23,7 +27,7 @@ async function handler(req, res) {
 
   const db = client.db();
 
-  const hashedPassword = hashPassword(password);
+  const hashedPassword = await hashPassword(password);
 
   const result = await db.collection('users').insertOne({
     email: email,
