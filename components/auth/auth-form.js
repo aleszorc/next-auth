@@ -45,6 +45,7 @@ function AuthForm() {
         password: enteredPassword,
       });
       if (!result.error) {
+        // set some auth state
       }
     } else {
       try {
