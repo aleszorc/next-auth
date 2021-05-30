@@ -42,7 +42,7 @@ async function handler(req, res) {
     return;
   }
 
-  const hashedPassword = await ashPassword(newPassword);
+  const hashedPassword = await hashPassword(newPassword);
 
   const result = await usersCollection.updateOne(
     { email: userEmail },
